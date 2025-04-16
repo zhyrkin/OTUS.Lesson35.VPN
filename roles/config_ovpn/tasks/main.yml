@@ -1,0 +1,33 @@
+---
+- name: create key-file
+  ansible.builtin.template:
+    src: static.key
+    dest: /etc/openvpn/static.key
+    mode: '0600'
+  
+- name: configure server
+  ansible.builtin.template:
+    src: server
+    dest: /etc/openvpn/server.conf
+    mode: '0744'
+  when: inventory_hostname == 'server'
+    
+- name: config ovpn client config
+  ansible.builtin.template:
+    src: client
+    dest: /etc/openvpn/server.conf
+    mode: '0744'
+  when: inventory_hostname == 'client'
+
+- name: create systecmct ovpn unit
+  ansible.builtin.template:
+    src: systemctl_unit
+    dest: /etc/systemd/system/openvpn@.service
+    mode: '0744'
+
+- name: Restart openvpn service
+  ansible.builtin.systemd_service:
+    name: openvpn@server.service
+    state: restarted
+    enabled: true
+    daemon_reload: true

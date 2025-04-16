@@ -1,0 +1,12 @@
+---
+- name: TUN/TAP режимы VPN
+  hosts: all
+  gather_facts: true
+
+  vars:
+    dev_type: tun #tap or tun
+
+  roles:
+    - role: install_utils
+    - role: config_ovpn
+  

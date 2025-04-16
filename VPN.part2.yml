@@ -1,0 +1,75 @@
+---
+- name: RAS 
+  hosts: all
+  gather_facts: true
+
+  vars:
+    dev_type: tun #tap or tun
+
+  roles:
+    - role: install_utils
+
+  post_tasks:
+    - name: conf server
+      ansible.builtin.template:
+        src: RAS_server/ras_server_config     
+        dest: /etc/openvpn/server.conf
+        mode: '0600'
+      when: inventory_hostname == 'server'
+
+    - name: copy ca.crt
+      ansible.builtin.template:
+        src: RAS_server/ca.crt     
+        dest: /etc/openvpn/ca.crt
+        mode: '0600'
+      when: inventory_hostname == 'server'
+
+    - name: copy certs
+      ansible.builtin.template:
+        src: 'RAS_server/server.{{ item }}'
+        dest: "/etc/openvpn/server.{{ item }}"
+        mode: '0600'
+      when: inventory_hostname == 'server'
+      with_items:
+        - key
+        - crt
+
+    - name: copy dh.pem
+      ansible.builtin.template:
+        src: RAS_server/dh.pem     
+        dest: /etc/openvpn/dh.pem
+        mode: '0600'
+      when: inventory_hostname == 'server'
+
+    - name: create systecmct ovpn unit
+      ansible.builtin.template:
+        src: RAS_server/systemctl_unit
+        dest: /etc/systemd/system/openvpn@.service
+        mode: '0744'
+      when: inventory_hostname == 'server'
+
+    - name: Restart openvpn service
+      ansible.builtin.systemd_service:
+        name: openvpn@server.service
+        state: restarted
+        enabled: true
+        daemon_reload: true
+      when: inventory_hostname == 'server'
+
+    - name: copy config file for client
+      ansible.builtin.template:
+        src: RAS_client/ras_client_config
+        dest: '~/client.conf'
+        mode: '0600'
+      when: inventory_hostname == 'client'
+
+    - name: copy cert files for client
+      ansible.builtin.template:
+        src: 'RAS_client/{{ item }}'
+        dest: '~/{{ item }}'
+        mode: '0600'
+      when: inventory_hostname == 'client'
+      with_items:
+        - client.crt
+        - ca.crt
+        - client.key

@@ -1,0 +1,14 @@
+dev {{ dev_type }} 
+proto udp 
+remote {{ hostvars['server']['ansible_host'] }} 1207 
+client 
+ca ./ca.crt 
+cert ./client.crt 
+key ./client.key 
+resolv-retry infinite 
+remote-cert-tls server 
+route 10.10.10.0 255.255.255.0 
+persist-key 
+persist-tun 
+comp-lzo 
+verb 3 
