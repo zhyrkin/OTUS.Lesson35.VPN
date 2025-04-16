@@ -43,7 +43,7 @@ Connecting to host 10.10.10.1, port 5201
 [  5]  25.00-30.00  sec  60.4 MBytes   101 Mbits/sec    0    359 KBytes       
 [  5]  30.00-35.00  sec  56.4 MBytes  94.6 Mbits/sec    0    458 KBytes       
 [  5]  35.00-40.00  sec  60.3 MBytes   101 Mbits/sec  180    460 KBytes       
-- - - - - - - - - - - - - - - - - - - - - - - - -
+
 [ ID] Interval           Transfer     Bitrate         Retr
 [  5]   0.00-40.00  sec   487 MBytes   102 Mbits/sec  533             sender
 [  5]   0.00-40.08  sec   485 MBytes   102 Mbits/sec                  receiver
