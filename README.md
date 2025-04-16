@@ -9,7 +9,7 @@
 1) Настроить VPN между двумя ВМ в tun/tap режимах, замерить скорость в туннелях, сделать вывод об отличающихся показателях
     Запустим плейбук VPN.part1.yml. Укажем переменной dev_type режим tap. После выполнения плейбука на сервере запустим ipef в режиме серевера (iperf3 -s)
     и на клиенте  'iperf3 -c 10.10.10.1 -t 40 -i 5' и зафиксируем результат
-    ```
+```
 zhurkin@vpnclient:~$ iperf3 -c 10.10.10.1 -t 40 -i 5
 Connecting to host 10.10.10.1, port 5201
 [  5] local 10.10.10.2 port 58616 connected to 10.10.10.1 port 5201
@@ -22,7 +22,7 @@ Connecting to host 10.10.10.1, port 5201
 [  5]  25.00-30.00  sec  61.2 MBytes   103 Mbits/sec    0    492 KBytes       
 [  5]  30.00-35.00  sec  61.2 MBytes   103 Mbits/sec    0   1.12 MBytes       
 [  5]  35.00-40.00  sec  60.0 MBytes   101 Mbits/sec   66   1.26 MBytes       
-- - - - - - - - - - - - - - - - - - - - - - - - -
+
 [ ID] Interval           Transfer     Bitrate         Retr
 [  5]   0.00-40.00  sec   485 MBytes   102 Mbits/sec  1095             sender
 [  5]   0.00-40.14  sec   482 MBytes   101 Mbits/sec                  receiver
